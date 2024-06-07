@@ -1,7 +1,9 @@
 package com.example;
 
+import com.example.http.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
@@ -11,8 +13,12 @@ public class DataService {
 
     public JedisDatabase jedisDatabase;
 
-    DataService(JedisDatabase jedisDatabase){
+    public HttpClient httpClient;
+
+    @Autowired
+    DataService(JedisDatabase jedisDatabase, HttpClient httpClient){
         this.jedisDatabase = jedisDatabase;
+        this.httpClient = httpClient;
     }
 
     public String get(String key){
@@ -26,5 +32,9 @@ public class DataService {
             logger.error("redis get error",e);
             return "service error";
         }
+    }
+
+    public String requestPoi(String id){
+        return httpClient.request(id);
     }
 }

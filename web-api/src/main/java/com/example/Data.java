@@ -19,4 +19,9 @@ public class Data {
     String get(@RequestParam String key){
         return dataService.get(key);
     }
+
+    @RequestMapping("/poi")
+    String poi(@RequestParam String id){
+        return dataService.requestPoi(id);
+    }
 }
